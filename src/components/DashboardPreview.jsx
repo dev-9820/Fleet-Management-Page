@@ -46,63 +46,62 @@ const FleetDashboard = () => {
     return () => clearInterval(interval);
   }, []);
 
- 
-useEffect(() => {
-  const interval = setInterval(() => {
-    setTruckPositions(prev =>
-      prev.map(truck => {
-        let progress = truck.progress + (truck.direction === "forward" ? 0.005 : -0.005);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTruckPositions(prev =>
+        prev.map(truck => {
+          let progress = truck.progress + (truck.direction === "forward" ? 0.005 : -0.005);
 
-        // Flip direction at ends
-        if (progress >= 1) progress = 1, truck.direction = "backward";
-        if (progress <= 0) progress = 0, truck.direction = "forward";
+          // Flip direction at ends
+          if (progress >= 1) progress = 1, truck.direction = "backward";
+          if (progress <= 0) progress = 0, truck.direction = "forward";
 
-        // Interpolate position
-        const x = truck.startX + (truck.endX - truck.startX) * progress;
-        const y = truck.startY + (truck.endY - truck.startY) * progress;
+          // Interpolate position
+          const x = truck.startX + (truck.endX - truck.startX) * progress;
+          const y = truck.startY + (truck.endY - truck.startY) * progress;
 
-        return {
-          ...truck,
-          progress,
-          direction: truck.direction,
-          x,
-          y: y + Math.sin(Date.now() / 500 + truck.id) * 0.3 // slight floating motion
-        };
-      })
-    );
-  }, 20);
+          return {
+            ...truck,
+            progress,
+            direction: truck.direction,
+            x,
+            y: y + Math.sin(Date.now() / 500 + truck.id) * 0.3 // slight floating motion
+          };
+        })
+      );
+    }, 20);
 
-  return () => clearInterval(interval);
-}, []);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="w-full max-w-2xl mx-auto">
       {/* macOS Window Chrome */}
-      <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-200">
+      <div className="bg-white rounded-xl lg:rounded-2xl shadow-xl lg:shadow-2xl overflow-hidden border border-gray-200">
         
         {/* Window Title Bar */}
-        <div className="bg-gradient-to-b from-gray-50 to-white border-b border-gray-200 px-5 py-4 flex items-center justify-between">
+        <div className="bg-gradient-to-b from-gray-50 to-white border-b border-gray-200 px-4 lg:px-5 py-3 lg:py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-red-400"></div>
-            <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
-            <div className="w-3 h-3 rounded-full bg-green-400"></div>
+            <div className="w-2 h-2 lg:w-3 lg:h-3 rounded-full bg-red-400"></div>
+            <div className="w-2 h-2 lg:w-3 lg:h-3 rounded-full bg-yellow-400"></div>
+            <div className="w-2 h-2 lg:w-3 lg:h-3 rounded-full bg-green-400"></div>
           </div>
-          <div className="flex items-center gap-1 text-black ">
-            <GiNetworkBars className="text-lg" />
+          <div className="flex items-center gap-1 text-black">
+            <GiNetworkBars className="text-base lg:text-lg" />
           </div>
         </div>
 
         {/* Dashboard Content */}
-        <div className="p-6 space-y-4">
+        <div className="p-4 lg:p-6 space-y-3 lg:space-y-4">
           
           {/* Live Fleet Counter */}
-          <div className="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-xl p-5 border border-indigo-100">
+          <div className="bg-gradient-to-br from-indigo-50 to-blue-50 rounded-lg lg:rounded-xl p-4 lg:p-5 border border-indigo-100">
             <div className="flex items-center gap-3">
-              <div className="p-3 bg-white rounded-xl shadow-sm">
-                <FiTruck className="text-2xl text-indigo-600" />
+              <div className="p-2 lg:p-3 bg-white rounded-lg lg:rounded-xl shadow-sm">
+                <FiTruck className="text-xl lg:text-2xl text-indigo-600" />
               </div>
               <div>
-                <div className="text-lg font-bold text-indigo-600 font-mono">
+                <div className="lg:text-lg font-bold text-indigo-600 font-mono">
                   25,000+ Fleet vehicles managed
                 </div>
               </div>
@@ -110,13 +109,13 @@ useEffect(() => {
           </div>
 
           {/* Map Widget */}
-          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100 relative overflow-hidden">
+          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg lg:rounded-xl p-4 lg:p-6 border border-blue-100 relative overflow-hidden">
             
             {/* Map Grid Background */}
             <div className="absolute inset-0 opacity-90">
               <div className="absolute inset-0" style={{
                 backgroundImage: 'linear-gradient(rgba(99, 102, 241, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(99, 102, 241, 0.1) 1px, transparent 1px)',
-                backgroundSize: '10px 10px'
+                backgroundSize: '8px 8px lg:10px 10px'
               }}></div>
             </div>
 
@@ -132,13 +131,13 @@ useEffect(() => {
               <path
                 d="M 10% 50% L 30% 40% L 50% 55% L 70% 45% L 90% 60%"
                 stroke="url(#routeLine)"
-                strokeWidth="3"
+                strokeWidth="2 lg:3"
                 fill="none"
-                strokeDasharray="10 5"
+                strokeDasharray="8 4 lg:10 5"
               >
                 <animate
                   attributeName="stroke-dashoffset"
-                  from="15"
+                  from="12 lg:15"
                   to="0"
                   dur="1s"
                   repeatCount="indefinite"
@@ -149,16 +148,16 @@ useEffect(() => {
             {/* Origin Marker */}
             <div className="absolute left-[15%] top-[45%] -translate-x-1/2 -translate-y-1/2 z-10">
               <div className="relative">
-                <div className="absolute -inset-2 bg-blue-400 rounded-full opacity-30 animate-ping"></div>
-                <div className="relative w-4 h-4 bg-blue-500 rounded-full border-2 border-white shadow-lg"></div>
+                <div className="absolute -inset-1 lg:-inset-2 bg-blue-400 rounded-full opacity-30 animate-ping"></div>
+                <div className="relative w-3 h-3 lg:w-4 lg:h-4 bg-blue-500 rounded-full border-2 border-white shadow-lg"></div>
               </div>
             </div>
 
             {/* Destination Marker */}
             <div className="absolute right-[10%] top-[45%] -translate-x-1/2 -translate-y-1/2 z-10">
               <div className="relative">
-                <div className="absolute -inset-2 bg-indigo-400 rounded-full opacity-30 animate-ping" style={{ animationDelay: '0.5s' }}></div>
-                <div className="relative w-4 h-4 bg-indigo-500 rounded-full border-2 border-white shadow-lg"></div>
+                <div className="absolute -inset-1 lg:-inset-2 bg-indigo-400 rounded-full opacity-30 animate-ping" style={{ animationDelay: '0.5s' }}></div>
+                <div className="relative w-3 h-3 lg:w-4 lg:h-4 bg-indigo-500 rounded-full border-2 border-white shadow-lg"></div>
               </div>
             </div>
 
@@ -174,27 +173,25 @@ useEffect(() => {
                 }}
               >
                 <div className="relative group">
-                  <div className="absolute -inset-2 bg-indigo-400 rounded-full blur-md opacity-40"></div>
-                  <FiTruck className="relative text-xl text-indigo-600 drop-shadow-lg" />
+                  <div className="absolute -inset-1 lg:-inset-2 bg-indigo-400 rounded-full blur-md opacity-40"></div>
+                  <FiTruck className="relative text-lg lg:text-xl text-indigo-600 drop-shadow-lg" />
                 </div>
               </div>
             ))}
-
-           
           </div>
 
           {/* Metrics Grid */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-3 lg:gap-4">
             
             {/* On Time Performance */}
-            <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-5 border border-green-100">
+            <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-lg lg:rounded-xl p-4 lg:p-5 border border-green-100">
               <div className="text-center">
-                <div className="text-4xl font-bold text-green-600 font-mono mb-1">
+                <div className="text-2xl lg:text-3xl xl:text-4xl font-bold text-green-600 font-mono mb-1">
                   {metrics.onTime.toFixed(1)}%
                 </div>
-                <div className="text-sm text-gray-600">On-Time Delivery Rate</div>
+                <div className="text-xs lg:text-sm text-gray-600">On-Time Delivery Rate</div>
               </div>
-              <div className="mt-3 bg-white rounded-full h-2 overflow-hidden">
+              <div className="mt-2 lg:mt-3 bg-white rounded-full h-1.5 lg:h-2 overflow-hidden">
                 <div 
                   className="h-full bg-gradient-to-r from-green-400 to-emerald-500 rounded-full transition-all duration-1000"
                   style={{ width: `90%` }}
@@ -203,14 +200,14 @@ useEffect(() => {
             </div>
 
             {/* Fuel Saved */}
-            <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-xl p-5 border border-orange-100">
+            <div className="bg-gradient-to-br from-orange-50 to-amber-50 rounded-lg lg:rounded-xl p-4 lg:p-5 border border-orange-100">
               <div className="text-center">
-                <div className="text-4xl font-bold text-orange-600 font-mono mb-1">
+                <div className="text-2xl lg:text-3xl xl:text-4xl font-bold text-orange-600 font-mono mb-1">
                   {metrics.fuelSaved}%
                 </div>
-                <div className="text-sm text-gray-600">Fuel Saved</div>
+                <div className="text-xs lg:text-sm text-gray-600">Fuel Saved</div>
               </div>
-              <div className="mt-3 bg-white rounded-full h-2 overflow-hidden">
+              <div className="mt-2 lg:mt-3 bg-white rounded-full h-1.5 lg:h-2 overflow-hidden">
                 <div 
                   className="h-full bg-gradient-to-r from-orange-400 to-amber-500 rounded-full transition-all duration-1000"
                   style={{ width: `40%` }}
@@ -221,23 +218,23 @@ useEffect(() => {
           </div>
 
           {/* Bottom Stats Row */}
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid grid-cols-3 gap-2 lg:gap-3">
             
-            <div className="bg-white rounded-xl p-4 border border-gray-200 text-center hover:shadow-md transition-shadow">
-              <FiActivity className="text-2xl text-purple-500 mx-auto mb-2" />
-              <div className="text-xl font-bold text-gray-800">{metrics.efficiency}%</div>
+            <div className="bg-white rounded-lg lg:rounded-xl p-3 lg:p-4 border border-gray-200 text-center hover:shadow-md transition-shadow">
+              <FiActivity className="text-xl lg:text-2xl text-purple-500 mx-auto mb-1 lg:mb-2" />
+              <div className="text-lg lg:text-xl font-bold text-gray-800">{metrics.efficiency}%</div>
               <div className="text-xs text-gray-500">Efficiency</div>
             </div>
 
-            <div className="bg-white rounded-xl p-4 border border-gray-200 text-center hover:shadow-md transition-shadow">
-              <FiZap className="text-2xl text-yellow-500 mx-auto mb-2" />
-              <div className="text-xl font-bold text-gray-800">2.5h</div>
+            <div className="bg-white rounded-lg lg:rounded-xl p-3 lg:p-4 border border-gray-200 text-center hover:shadow-md transition-shadow">
+              <FiZap className="text-xl lg:text-2xl text-yellow-500 mx-auto mb-1 lg:mb-2" />
+              <div className="text-lg lg:text-xl font-bold text-gray-800">2.5h</div>
               <div className="text-xs text-gray-500">Avg Time</div>
             </div>
 
-            <div className="bg-white rounded-xl p-4 border border-gray-200 text-center hover:shadow-md transition-shadow">
-              <FiMapPin className="text-2xl text-blue-500 mx-auto mb-2" />
-              <div className="text-xl font-bold text-gray-800">8</div>
+            <div className="bg-white rounded-lg lg:rounded-xl p-3 lg:p-4 border border-gray-200 text-center hover:shadow-md transition-shadow">
+              <FiMapPin className="text-xl lg:text-2xl text-blue-500 mx-auto mb-1 lg:mb-2" />
+              <div className="text-lg lg:text-xl font-bold text-gray-800">8</div>
               <div className="text-xs text-gray-500">Active Routes</div>
             </div>
 
