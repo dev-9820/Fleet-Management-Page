@@ -48,7 +48,6 @@ const ServicesSection = () => {
       ],
       image: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=500&h=300&fit=crop",
       badge:"DOT compliance"
-      
     },
     {
       id: 4,
@@ -99,14 +98,16 @@ const ServicesSection = () => {
   };
 
   return (
-    <div className="bg-gray-50 py-20">
-      <div className="mx-40">
+    <div className="bg-gray-50 py-8 lg:py-20">
+      <div className="mx-4 lg:mx-8 xl:mx-40">
         {/* Header Section */}
-        <div className="flex flex-row mt-20 mb-6">
-          <h2 className="w-1/2 text-5xl font-extrabold text-gray-900 mb-6">FLEET SOLUTIONS</h2>
+        <div className="flex flex-col lg:flex-row mt-8 lg:mt-20 mb-6 lg:mb-12 gap-6 lg:gap-0">
+          <h2 className="lg:w-1/2 text-3xl sm:text-4xl lg:text-5xl font-extrabold text-gray-900">
+            FLEET SOLUTIONS
+          </h2>
           
-          <div className="w-1/2">
-            <p className="text-md text-gray-700 leading-relaxed">
+          <div className="lg:w-1/2">
+            <p className="text-black text-sm lg:text-lg leading-relaxed">
               Comprehensive fleet management solutions designed to optimize your operations, 
               ensure compliance, and drive efficiency through cutting-edge technology and 
               real-time data analytics.
@@ -114,110 +115,115 @@ const ServicesSection = () => {
           </div>
         </div>
 
-        {/* Main Content Grid */}
-        <div className="">
-          {/* Left Column - Accordion */}
-          <div className="space-y-4">
-            {services.map((service, index) => (
+        {/* Main Content */}
+        <div className="space-y-4">
+          {services.map((service, index) => (
+            <div
+              key={service.id}
+              className={`border rounded-xl lg:rounded-2xl overflow-hidden transition-all duration-500 ${
+                activeIndex === index 
+                  ? 'border-orange-400 shadow-lg lg:shadow-2xl shadow-orange-100 bg-gradient-to-br from-gray-800 to-gray-900' 
+                  : 'border-gray-200 hover:border-gray-300 bg-white'
+              }`}
+            >
+              {/* Accordion Header */}
+              <button
+                className="w-full p-4 lg:p-6 text-left flex justify-between items-start lg:items-center"
+                onClick={() => toggleAccordion(index)}
+              >
+                <div className="flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-4 flex-1">
+                  <div>
+                    <span className={`text-xl lg:text-2xl font-bold ${
+                      activeIndex === index ? 'text-white' : 'text-gray-900'
+                    }`}>
+                      {service.number}
+                    </span>
+                  </div>
+                  <div className="flex gap-2">
+                    <h3 className={`text-xl lg:text-2xl font-bold ${
+                      activeIndex === index ? 'text-white' : 'text-gray-900'
+                    }`}>
+                      {service.title}
+                    </h3>
+                    {service.badge && (
+                      <div className="flex mt-1 lg:mt-0">
+                        <span className={`text-xs mx-auto my-auto lg:text-sm font-light px-2 py-1 rounded-full ${
+                          activeIndex === index 
+                            ? 'text-orange-300 bg-orange-500/20' 
+                            : 'text-gray-600 bg-gray-200'
+                        }`}>
+                          {service.badge}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                {activeIndex === index ? (
+                  <FiChevronUp className="text-orange-500 text-lg lg:text-xl flex-shrink-0 mt-1 lg:mt-0" />
+                ) : (
+                  <FiChevronDown className="text-gray-400 text-lg lg:text-xl flex-shrink-0 mt-1 lg:mt-0" />
+                )}
+              </button>
+
+              {/* Accordion Content */}
               <div
-                key={service.id}
-                className={`border rounded-2xl overflow-hidden transition-all duration-500 ${
-                  activeIndex === index 
-                    ? 'border-orange-400 shadow-2xl shadow-orange-100 bg-gradient-to-br from-gray-800 to-gray-900' 
-                    : 'border-gray-200 hover:border-gray-300 bg-white'
+                className={`transition-all duration-500 ease-in-out overflow-hidden ${
+                  activeIndex === index ? 'max-h-[2000px] opacity-100 py-4 lg:py-6' : 'max-h-0 opacity-0 py-0'
                 }`}
               >
-                <button
-                  className="w-full p-6 text-left flex justify-between items-center"
-                  onClick={() => toggleAccordion(index)}
-                >
-                  <div className="flex grid-col-2 items-center gap-4">
-                    <div>
-                      <span className={`text-2xl font-bold ${
-                        activeIndex === index ? 'text-white' : 'text-gray-900'
-                      }`}>
-                        {service.number}
-                      </span>
-                    </div>
-                    <div>
-                      <h3 className={`text-2xl font-bold ${
-                        activeIndex === index ? 'text-white' : 'text-gray-900'
-                      }`}>
-                        {service.title}
-                      </h3>
-                    </div>
-                    {service.badge ? 
-                    (<>
-                      <div className="flex text-md font-light -translate-y-2">
-                      <p>{service.badge}</p>
-                      </div>
-                    </>) 
-                    : 
-                    (<>
-                    </>)}
-                  </div>
-                  {activeIndex === index ? (
-                    <FiChevronUp className="text-orange-500 text-xl" />
-                  ) : (
-                    <FiChevronDown className="text-gray-400 text-xl" />
-                  )}
-                </button>
+                <div className="px-4 lg:px-6 grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start">
+                  {/* Left Column - Text */}
+                  <div className="space-y-4">
+                    <p className="text-white text-sm lg:text-base leading-relaxed">
+                      {service.description}
+                    </p>
 
-                <div
-                  className={`transition-all duration-700 ease-in-out overflow-hidden ${
-                    activeIndex === index ? 'max-h-[1000px] opacity-100 py-6' : 'max-h-0 opacity-0 py-0'
-                  }`}
-                >
-                  <div className="px-6 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                    {/* Left Column - Text */}
-                    <div>
-                      <p className="text-white mb-4 leading-relaxed">{service.description}</p>
+                    {service.features && (
+                      <ul className="space-y-2">
+                        {service.features.map((feature, idx) => (
+                          <li key={idx} className="flex items-start gap-2 text-white">
+                            <span className="text-orange-400 mt-1 flex-shrink-0">•</span>
+                            <span className="text-sm lg:text-base">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
 
-                      {service.features && (
-                        <ul className="space-y-2 mb-4">
-                          {service.features.map((feature, idx) => (
-                            <li key={idx} className="items-center gap-2 text-white">
-                              <span className="text-orange-400 mr-2 mt-1">•</span>
-                              {feature}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
+                    {service.note && (
+                      <p className="text-xs lg:text-sm text-gray-300 italic">
+                        {service.note}
+                      </p>
+                    )}
 
-                      {service.note && (
-                        <p className="text-sm text-gray-300 italic">{service.note}</p>
-                      )}
-
-                      {/* Get Demo Card */}
-                      <div className="bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-orange-500/20 w-64 rounded-xl p-3 mt-8 cursor-pointer group">
-                        <div className="flex items-center">
-                          <div className="flex-1 min-w-0">
-                            <p className="text-white font-medium text-sm leading-tight group-hover:text-orange-100 transition-colors duration-300">
-                              Request Demo
-                            </p>
-                          </div>
-                          <div className="flex-shrink-0 group-hover:translate-x-1 transition-transform duration-300">
-                            <MdOutlineArrowRight className="bg-white rounded-full text-2xl p-1 text-gray-900 group-hover:bg-orange-100 transition-colors duration-300" />
-                          </div>
+                    {/* Get Demo Card */}
+                    <div className="bg-white/20 backdrop-blur-md border border-white/30 hover:bg-white/30 transition-all duration-500 hover:scale-[1.02] hover:shadow-xl lg:hover:shadow-2xl hover:shadow-orange-500/20 w-full lg:w-64 rounded-xl p-3 mt-4 lg:mt-8 cursor-pointer group">
+                      <div className="flex items-center justify-between">
+                        <div className="flex-1 min-w-0">
+                          <p className="text-white font-medium text-sm leading-tight group-hover:text-orange-100 transition-colors duration-300">
+                            Request Demo
+                          </p>
+                        </div>
+                        <div className="flex-shrink-0 group-hover:translate-x-1 transition-transform duration-300">
+                          <MdOutlineArrowRight className="bg-white rounded-full text-xl lg:text-2xl p-1 text-gray-900 group-hover:bg-orange-100 transition-colors duration-300" />
                         </div>
                       </div>
                     </div>
+                  </div>
 
-                    {/* Right Column - Image */}
-                    <div className="flex justify-center">
-                      <div className="rounded-2xl overflow-hidden w-full max-w-md aspect-video bg-gray-100">
-                        <img
-                          src={service.image}
-                          alt={service.title}
-                          className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                        />
-                      </div>
+                  {/* Right Column - Image */}
+                  <div className="flex justify-center lg:justify-end">
+                    <div className="rounded-xl lg:rounded-2xl overflow-hidden w-full max-w-md aspect-video bg-gray-100">
+                      <img
+                        src={service.image}
+                        alt={service.title}
+                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                      />
                     </div>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>
