@@ -113,10 +113,14 @@ const FleetDashboard = () => {
             
             {/* Map Grid Background */}
             <div className="absolute inset-0 opacity-90">
-              <div className="absolute inset-0" style={{
-                backgroundImage: 'linear-gradient(rgba(99, 102, 241, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(99, 102, 241, 0.1) 1px, transparent 1px)',
-                backgroundSize: '8px 8px lg:10px 10px'
-              }}></div>
+              <div
+                className="
+                  absolute inset-0
+                  bg-[linear-gradient(rgba(99,102,241,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(99,102,241,0.1)_1px,transparent_1px)]
+                  bg-[size:8px_8px]
+                  lg:bg-[size:10px_10px]
+                "
+              ></div>
             </div>
 
             {/* Route Line */}
