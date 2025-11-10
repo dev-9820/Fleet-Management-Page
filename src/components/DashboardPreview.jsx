@@ -36,7 +36,7 @@ const FleetDashboard = () => {
     const animateMetrics = () => {
       setMetrics(prev => ({
         vehicles: prev.vehicles >= 247 ? 247 : prev.vehicles + 7,
-        onTime: prev.onTime >= 98.2 ? 98.2 : prev.onTime + 2.8,
+        onTime: prev.onTime >= 98.2 ? 98.2 : prev.onTime + 1.3,
         fuelSaved: prev.fuelSaved >= 40 ? 40 : prev.fuelSaved + 1,
         efficiency: prev.efficiency >= 94 ? 94 : prev.efficiency + 3
       }));
